@@ -1,0 +1,204 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using Sap.Data.Hana;
+
+namespace RamoUtils
+{
+    public class StockService
+    {
+        private string sqlConnectionString;
+        private string hanaConnectionString;
+
+        public StockService(string sqlConn, string hanaConn)
+        {
+            sqlConnectionString = sqlConn;
+            hanaConnectionString = hanaConn;
+        }
+
+        public class ArticuloSinStock
+        {
+            public string NumeroFactura { get; set; }
+            public string ItemCode { get; set; }
+            public string ItemName { get; set; }
+            public string WhsCode { get; set; }
+            public decimal CantidadRequerida { get; set; }
+            public decimal StockDisponible { get; set; }
+            public decimal Faltante { get; set; }
+        }
+
+        public List<ArticuloSinStock> ConsultarStockPorFecha(DateTime fecha)
+        {
+            List<ArticuloSinStock> resultado = new List<ArticuloSinStock>();
+
+            // 1. Obtener artículos pendientes de SQL por fecha
+            DataTable pendientes = ObtenerArticulosPendientesSQL(fecha);
+
+            if (pendientes.Rows.Count == 0)
+                return resultado;
+
+            // 2. Extraer códigos únicos
+            List<string> itemCodes = pendientes.AsEnumerable()
+                .Select(r => r.Field<string>("ItemCode"))
+                .Distinct()
+                .ToList();
+
+            List<string> whsCodes = pendientes.AsEnumerable()
+                .Select(r => r.Field<string>("WhsCode"))
+                .Where(w => !string.IsNullOrEmpty(w))
+                .Distinct()
+                .ToList();
+
+            if (itemCodes.Count == 0)
+                return resultado;
+
+            // 3. Obtener stock de HANA
+            DataTable stockHana = ObtenerStockHANA(itemCodes, whsCodes);
+
+            // 4. Comparar y generar reporte
+            foreach (DataRow row in pendientes.Rows)
+            {
+                string itemCode = row["ItemCode"].ToString();
+                string whsCode = row["WhsCode"]?.ToString() ?? "";
+                decimal cantidadRequerida = Convert.ToDecimal(row["Quantity"]);
+                string docNum = row["DocNum"]?.ToString() ?? "";
+
+                // Buscar stock en HANA
+                decimal stockDisponible = 0;
+                string itemName = "";
+
+                if (!string.IsNullOrEmpty(whsCode))
+                {
+                    DataRow[] stockRows = stockHana.Select(
+                        $"ItemCode = '{itemCode}' AND WhsCode = '{whsCode}'");
+
+                    if (stockRows.Length > 0)
+                    {
+                        stockDisponible = Convert.ToDecimal(stockRows[0]["StockReal"]);
+                        itemName = stockRows[0]["ItemName"].ToString();
+                    }
+                }
+                else
+                {
+                    // Si no hay almacén específico, sumar todos los almacenes
+                    DataRow[] stockRows = stockHana.Select($"ItemCode = '{itemCode}'");
+                    if (stockRows.Length > 0)
+                    {
+                        stockDisponible = stockRows.Sum(r => Convert.ToDecimal(r["StockReal"]));
+                        itemName = stockRows[0]["ItemName"].ToString();
+                    }
+                }
+
+                // Si no hay stock suficiente, agregar al reporte
+                if (stockDisponible < cantidadRequerida)
+                {
+                    resultado.Add(new ArticuloSinStock
+                    {
+                        NumeroFactura = docNum,
+                        ItemCode = itemCode,
+                        ItemName = itemName,
+                        WhsCode = whsCode,
+                        CantidadRequerida = cantidadRequerida,
+                        StockDisponible = Math.Max(0, stockDisponible),
+                        Faltante = cantidadRequerida - Math.Max(0, stockDisponible)
+                    });
+                }
+            }
+
+            return resultado.OrderBy(x => x.NumeroFactura).ThenBy(x => x.ItemCode).ToList();
+        }
+
+        private DataTable ObtenerArticulosPendientesSQL(DateTime fecha)
+        {
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(sqlConnectionString))
+            {
+                // AJUSTA ESTA CONSULTA SEGÚN TU ESTRUCTURA DE TABLAS
+                string query = @"
+                    SELECT 
+                        h.DocNum,
+                        h.DocEntry,
+                        d.ItemCode,
+                        d.Quantity,
+                        d.WhsCode,
+                        h.DocDate
+                    FROM DetalleFacturas d
+                    INNER JOIN EncabezadoFacturas h ON d.DocEntry = h.DocEntry
+                    WHERE (h.Migrado = 0 OR h.ErrorMigracion = 1)
+                    AND CAST(h.DocDate AS DATE) = @Fecha
+                    ORDER BY h.DocNum, d.ItemCode";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+            }
+
+            return dt;
+        }
+
+        private DataTable ObtenerStockHANA(List<string> itemCodes, List<string> whsCodes)
+        {
+            DataTable dt = new DataTable();
+
+            using (HanaConnection conn = new HanaConnection(hanaConnectionString))
+            {
+                conn.Open();
+
+                // Construir parámetros
+                string itemsIn = string.Join(",", itemCodes.Select((s, i) => $"@Item{i}"));
+                
+                string query = $@"
+                    SELECT 
+                        T0.""ItemCode"",
+                        T0.""ItemName"",
+                        T1.""WhsCode"",
+                        T1.""OnHand"" AS ""StockDisponible"",
+                        T1.""IsCommited"" AS ""Comprometido"",
+                        (T1.""OnHand"" - T1.""IsCommited"") AS ""StockReal""
+                    FROM ""OITM"" T0
+                    INNER JOIN ""OITW"" T1 ON T0.""ItemCode"" = T1.""ItemCode""
+                    WHERE T0.""ItemCode"" IN ({itemsIn})";
+
+                // Agregar filtro de almacenes si existen
+                if (whsCodes != null && whsCodes.Count > 0)
+                {
+                    string whsIn = string.Join(",", whsCodes.Select((s, i) => $"@Whs{i}"));
+                    query += $" AND T1.\"WhsCode\" IN ({whsIn})";
+                }
+
+                using (HanaCommand cmd = new HanaCommand(query, conn))
+                {
+                    // Agregar parámetros de items
+                    for (int i = 0; i < itemCodes.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue($"@Item{i}", itemCodes[i]);
+                    }
+
+                    // Agregar parámetros de almacenes
+                    if (whsCodes != null && whsCodes.Count > 0)
+                    {
+                        for (int i = 0; i < whsCodes.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue($"@Whs{i}", whsCodes[i]);
+                        }
+                    }
+
+                    using (HanaDataAdapter adapter = new HanaDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+            }
+
+            return dt;
+        }
+    }
+}

@@ -1,0 +1,303 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using SAPbobsCOM;
+
+namespace RamoUtils
+{
+    /// <summary>
+    /// Servicio para ejecutar consultas en SAP HANA usando DI API RecordSet
+    /// </summary>
+    public class DIAPIService
+    {
+        private ConnectionManager connectionManager;
+
+        public DIAPIService(ConnectionManager connManager)
+        {
+            connectionManager = connManager;
+        }
+
+        /// <summary>
+        /// Ejecuta un Stored Procedure en SAP HANA y retorna un DataTable
+        /// </summary>
+        public DataTable ExecuteStoredProcedure(string procedureName, Dictionary<string, object> parameters = null)
+        {
+            Recordset rs = null;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                rs = connectionManager.CreateRecordset();
+
+                // Construir llamada al SP
+                string query = BuildStoredProcedureCall(procedureName, parameters);
+
+                // Ejecutar
+                rs.DoQuery(query);
+
+                // Convertir RecordSet a DataTable
+                dt = RecordsetToDataTable(rs);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al ejecutar SP '{procedureName}': {ex.Message}", ex);
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(rs);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ejecuta una consulta SQL directa en SAP HANA
+        /// </summary>
+        public DataTable ExecuteQuery(string query)
+        {
+            Recordset rs = null;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                rs = connectionManager.CreateRecordset();
+                rs.DoQuery(query);
+                dt = RecordsetToDataTable(rs);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al ejecutar query: {ex.Message}", ex);
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(rs);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Consulta el stock disponible en SAP HANA por artículo y almacén
+        /// </summary>
+        public DataTable ConsultarStockHANA(List<string> itemCodes, List<string> whsCodes = null)
+        {
+            if (itemCodes == null || itemCodes.Count == 0)
+            {
+                return new DataTable();
+            }
+
+            try
+            {
+                // Verificar si hay un SP configurado
+                string spName = ConfigHelper.GetHANAStoredProcConsultarStock();
+
+                if (!string.IsNullOrEmpty(spName))
+                {
+                    // Usar Stored Procedure
+                    var parameters = new Dictionary<string, object>
+                    {
+                        { "ItemCodes", string.Join(",", itemCodes) },
+                        { "WhsCodes", whsCodes != null ? string.Join(",", whsCodes) : "" }
+                    };
+
+                    return ExecuteStoredProcedure(spName, parameters);
+                }
+                else
+                {
+                    // Usar consulta SQL directa
+                    return ConsultarStockDirecto(itemCodes, whsCodes);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al consultar stock en HANA: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Consulta stock directamente sin SP
+        /// </summary>
+        private DataTable ConsultarStockDirecto(List<string> itemCodes, List<string> whsCodes)
+        {
+            // Construir lista de items con comillas simples
+            List<string> quotedItems = new List<string>();
+            foreach (string item in itemCodes)
+            {
+                quotedItems.Add($"'{EscapeSQLString(item)}'");
+            }
+
+            string query = $@"
+                SELECT 
+                    T0.""ItemCode"",
+                    T0.""ItemName"",
+                    T1.""WhsCode"",
+                    T1.""OnHand"" AS ""StockDisponible"",
+                    T1.""IsCommited"" AS ""Comprometido"",
+                    (T1.""OnHand"" - T1.""IsCommited"") AS ""StockReal""
+                FROM ""OITM"" T0
+                INNER JOIN ""OITW"" T1 ON T0.""ItemCode"" = T1.""ItemCode""
+                WHERE T0.""ItemCode"" IN ({string.Join(",", quotedItems)})";
+
+            // Agregar filtro de almacenes si existen
+            if (whsCodes != null && whsCodes.Count > 0)
+            {
+                List<string> quotedWhs = new List<string>();
+                foreach (string whs in whsCodes)
+                {
+                    quotedWhs.Add($"'{EscapeSQLString(whs)}'");
+                }
+                query += $" AND T1.\"WhsCode\" IN ({string.Join(",", quotedWhs)})";
+            }
+
+            return ExecuteQuery(query);
+        }
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Construye la llamada a un Stored Procedure
+        /// </summary>
+        private string BuildStoredProcedureCall(string procedureName, Dictionary<string, object> parameters)
+        {
+            if (parameters == null || parameters.Count == 0)
+            {
+                return $"CALL {procedureName}()";
+            }
+
+            List<string> paramList = new List<string>();
+            foreach (var param in parameters)
+            {
+                string value = FormatParameterValue(param.Value);
+                paramList.Add(value);
+            }
+
+            return $"CALL {procedureName}({string.Join(", ", paramList)})";
+        }
+
+        /// <summary>
+        /// Formatea un valor de parámetro para SQL
+        /// </summary>
+        private string FormatParameterValue(object value)
+        {
+            if (value == null)
+            {
+                return "NULL";
+            }
+
+            if (value is string)
+            {
+                return $"'{EscapeSQLString(value.ToString())}'";
+            }
+
+            if (value is DateTime)
+            {
+                DateTime dt = (DateTime)value;
+                return $"'{dt:yyyy-MM-dd}'";
+            }
+
+            if (value is bool)
+            {
+                return (bool)value ? "1" : "0";
+            }
+
+            return value.ToString();
+        }
+
+        /// <summary>
+        /// Escapa caracteres especiales en strings SQL
+        /// </summary>
+        private string EscapeSQLString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            return value.Replace("'", "''");
+        }
+
+        /// <summary>
+        /// Convierte un RecordSet de SAP a DataTable
+        /// </summary>
+        private DataTable RecordsetToDataTable(Recordset rs)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                if (rs.RecordCount == 0)
+                {
+                    return dt;
+                }
+
+                // Crear columnas
+                for (int i = 0; i < rs.Fields.Count; i++)
+                {
+                    Field field = rs.Fields.Item(i);
+                    DataColumn column = new DataColumn(field.Name);
+
+                    // Mapear tipos de datos
+                    switch (field.Type)
+                    {
+                        case BoFieldTypes.db_Alpha:
+                        case BoFieldTypes.db_Memo:
+                            column.DataType = typeof(string);
+                            break;
+                        case BoFieldTypes.db_Numeric:
+                            column.DataType = typeof(decimal);
+                            break;
+                        case BoFieldTypes.db_Date:
+                            column.DataType = typeof(DateTime);
+                            break;
+                        case BoFieldTypes.db_Float:
+                            column.DataType = typeof(double);
+                            break;
+                        default:
+                            column.DataType = typeof(object);
+                            break;
+                    }
+
+                    dt.Columns.Add(column);
+                }
+
+                // Cargar datos
+                rs.MoveFirst();
+                while (!rs.EoF)
+                {
+                    DataRow row = dt.NewRow();
+
+                    for (int i = 0; i < rs.Fields.Count; i++)
+                    {
+                        Field field = rs.Fields.Item(i);
+                        object value = field.Value;
+
+                        if (value != null && value != DBNull.Value)
+                        {
+                            row[i] = value;
+                        }
+                        else
+                        {
+                            row[i] = DBNull.Value;
+                        }
+                    }
+
+                    dt.Rows.Add(row);
+                    rs.MoveNext();
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al convertir RecordSet a DataTable: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+    }
+}

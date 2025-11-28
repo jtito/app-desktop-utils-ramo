@@ -1,0 +1,25 @@
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\bin\x64\Debug\RamoUtils.pdb
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.AssemblyReference.cache
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\Interop.SAPbobsCOM.dll
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\Interop.SAPbouiCOM.dll
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.ResolveComReference.cache
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.FrmConsultaStock.resources
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.GenerateResource.cache
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.CoreCompileInputs.cache
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.pdb
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\bin\x64\Debug\RamoUtils.exe.config
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\bin\x64\Debug\RamoUtils.exe
+D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.exe
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\bin\x64\Debug\RamoUtils.exe.config
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\bin\x64\Debug\RamoUtils.exe
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\bin\x64\Debug\RamoUtils.pdb
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.AssemblyReference.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\Interop.SAPbobsCOM.dll
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\Interop.SAPbouiCOM.dll
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.ResolveComReference.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.FrmConsultaStock.resources
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.GenerateResource.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.csproj.CoreCompileInputs.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.exe
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.pdb
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.exe.config

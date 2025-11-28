@@ -1,0 +1,318 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+
+namespace RamoUtils
+{
+    /// <summary>
+    /// Servicio de negocio para consultar stock y validar disponibilidad
+    /// </summary>
+    public class StockService : IDisposable
+    {
+        private ConnectionManager connectionManager;
+        private DIAPIService diapiService;
+        private bool disposed = false;
+
+        /// <summary>
+        /// Constructor que inicializa los servicios de conexión
+        /// </summary>
+        public StockService(ConnectionManager connManager)
+        {
+            connectionManager = connManager ?? throw new ArgumentNullException(nameof(connManager));
+            diapiService = new DIAPIService(connectionManager);
+        }
+
+        /// <summary>
+        /// Clase para representar artículos sin stock suficiente
+        /// </summary>
+        public class ArticuloSinStock
+        {
+            public string NumeroFactura { get; set; }
+            public string ItemCode { get; set; }
+            public string ItemName { get; set; }
+            public string WhsCode { get; set; }
+            public decimal CantidadRequerida { get; set; }
+            public decimal StockDisponible { get; set; }
+            public decimal Faltante { get; set; }
+            public int UomEntry { get; set; }
+            public decimal FactorConversion { get; set; }
+        }
+
+        /// <summary>
+        /// Consulta artículos sin stock suficiente por fecha (ULTRA-OPTIMIZADO)
+        /// </summary>
+        public List<ArticuloSinStock> ConsultarStockPorFecha(DateTime fecha)
+        {
+            List<ArticuloSinStock> resultado = new List<ArticuloSinStock>();
+
+            try
+            {
+                // 1. Obtener artículos pendientes de SQL por fecha
+                DataTable pendientes = ObtenerArticulosPendientesSQL(fecha);
+
+                if (pendientes.Rows.Count == 0)
+                    return resultado;
+
+                // 2. Obtener stock de HANA por lotes (con pre-carga de UoM)
+                DataTable stockHana = diapiService.ConsultarStockHANAPorLotes(pendientes);
+
+                // 3. Crear índices para búsqueda O(1)
+                var stockPorItemCode = new Dictionary<string, List<DataRow>>();
+                var stockPorItemWhs = new Dictionary<string, DataRow>();
+
+                foreach (DataRow row in stockHana.Rows)
+                {
+                    string itemCode = row["ItemCode"]?.ToString() ?? "";
+                    string whsCode = row["WhsCode"]?.ToString() ?? "";
+
+                    if (string.IsNullOrEmpty(itemCode))
+                        continue;
+
+                    // Índice por ItemCode + WhsCode
+                    string key = $"{itemCode}|{whsCode}";
+                    if (!stockPorItemWhs.ContainsKey(key))
+                    {
+                        stockPorItemWhs[key] = row;
+                    }
+
+                    // Índice por ItemCode solo
+                    if (!stockPorItemCode.ContainsKey(itemCode))
+                    {
+                        stockPorItemCode[itemCode] = new List<DataRow>();
+                    }
+                    stockPorItemCode[itemCode].Add(row);
+                }
+
+                // 4. Procesar cada detalle de factura
+                foreach (DataRow row in pendientes.Rows)
+                {
+                    string itemCode = row["ItemCode"]?.ToString() ?? "";
+                    string whsCode = row["WhsCode"]?.ToString() ?? "";
+                    //string docNum = row["DocNum"]?.ToString() ?? "";
+                    
+                    if (string.IsNullOrEmpty(itemCode))
+                        continue;
+
+                    decimal cantidad = row["Quantity"] != DBNull.Value 
+                        ? Convert.ToDecimal(row["Quantity"]) 
+                        : 0m;
+
+                    int uomEntry = row["UomEntry"] != DBNull.Value 
+                        ? Convert.ToInt32(row["UomEntry"]) 
+                        : 0;
+
+                    // Obtener factor de conversión (ya está en caché)
+                    decimal factorConversion = diapiService.ObtenerFactorConversionUoM(itemCode, uomEntry);
+
+                    // Calcular cantidad en unidad base
+                    decimal cantidadBase = cantidad * factorConversion;
+
+                    // Buscar stock en índice O(1)
+                    decimal stockDisponible = 0;
+                    string itemName = "";
+                    string key = $"{itemCode}|{whsCode}";
+
+                    if (stockPorItemWhs.ContainsKey(key))
+                    {
+                        // Encontrado con WhsCode específico
+                        DataRow stockRow = stockPorItemWhs[key];
+                        stockDisponible = stockRow["StockReal"] != DBNull.Value
+                            ? Convert.ToDecimal(stockRow["StockReal"])
+                            : 0m;
+                        itemName = stockRow["ItemName"]?.ToString() ?? "";
+                    }
+                    else if (stockPorItemCode.ContainsKey(itemCode))
+                    {
+                        // Sumar todos los almacenes
+                        var stockRows = stockPorItemCode[itemCode];
+                        stockDisponible = stockRows
+                            .Where(r => r["StockReal"] != DBNull.Value)
+                            .Sum(r => Convert.ToDecimal(r["StockReal"]));
+                        itemName = stockRows[0]["ItemName"]?.ToString() ?? "";
+                    }
+
+                    // Si no hay stock suficiente, agregar al reporte
+                    if (stockDisponible < cantidadBase)
+                    {
+                        resultado.Add(new ArticuloSinStock
+                        {
+                            //NumeroFactura = docNum,
+                            ItemCode = itemCode,
+                            ItemName = itemName,
+                            WhsCode = whsCode,
+                            CantidadRequerida = cantidadBase,
+                            StockDisponible = Math.Max(0, stockDisponible),
+                            Faltante = cantidadBase - Math.Max(0, stockDisponible),
+                            UomEntry = uomEntry,
+                            FactorConversion = factorConversion
+                        });
+                    }
+                }
+
+                return resultado.OrderBy(x => x.NumeroFactura).ThenBy(x => x.ItemCode).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al consultar stock por fecha: {ex.Message}", ex);
+            }
+        }
+
+        #region Métodos SQL Server
+
+        /// <summary>
+        /// Obtiene artículos pendientes desde SQL Server
+        /// Puede usar Stored Procedure o consulta directa
+        /// </summary>
+        private DataTable ObtenerArticulosPendientesSQL(DateTime fecha)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                // Verificar si hay un SP configurado
+                string spName = ConfigHelper.GetSQLStoredProcFacturasPendientes();
+
+                using (SqlConnection conn = connectionManager.GetSQLConnection())
+                {
+                    conn.Open();
+
+                    if (!string.IsNullOrEmpty(spName))
+                    {
+                        // Usar Stored Procedure
+                        using (SqlCommand cmd = new SqlCommand(spName, conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandTimeout = ConfigHelper.GetQueryTimeout();
+                            cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+
+                            using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                            {
+                                adapter.Fill(dt);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Usar consulta SQL directa con nombres de tablas configurables
+                        string tablaEncabezado = ConfigHelper.GetSQLTablaEncabezado();
+                        string tablaDetalle = ConfigHelper.GetSQLTablaDetalle();
+
+                        string query = $@"
+                            SELECT 
+                                C.NroOperacion AS DocNum,
+                                C.IdVenta AS DocEntry,
+                                D.SAP_ItemCode AS ItemCode,
+                                D.Cantidad AS Quantity,
+                                OC.U_SEIN_ALMA AS WhsCode,
+                                C.FechaEmision AS DocDate,
+                                D.SAP_UoMEntry AS UomEntry
+                            FROM {tablaDetalle} D
+                            INNER JOIN {tablaEncabezado} C ON D.IdVenta = C.IdVenta
+                            INNER JOIN OCRD OC ON OC.CardCode = C.SAP_CodigoCaja
+                            WHERE C.SAP_Estado IN ('A', 'E')
+                            AND CAST(C.FechaEmision AS DATE) = @Fecha
+                            AND C.SAP_ObjType <> 14
+                            AND D.SAP_ItemCode IS NOT NULL
+                            ORDER BY C.NroOperacion, D.SAP_ItemCode";
+
+                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.CommandTimeout = ConfigHelper.GetQueryTimeout();
+                            cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+
+                            using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                            {
+                                adapter.Fill(dt);
+                            }
+                        }
+                    }
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener artículos pendientes de SQL: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+
+        #region Métodos SAP HANA (DI API)
+
+        /// <summary>
+        /// Obtiene stock disponible desde SAP HANA usando DI API
+        /// </summary>
+        private DataTable ObtenerStockHANA(List<string> itemCodes, List<string> whsCodes)
+        {
+            try
+            {
+                return diapiService.ConsultarStockHANA(itemCodes, whsCodes);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener stock de HANA: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+
+        #region Métodos Públicos Adicionales
+
+        /// <summary>
+        /// Consulta stock de un artículo específico
+        /// </summary>
+        public DataTable ConsultarStockPorArticulo(string itemCode, string whsCode = null)
+        {
+            List<string> items = new List<string> { itemCode };
+            List<string> warehouses = string.IsNullOrEmpty(whsCode) ? null : new List<string> { whsCode };
+            
+            return diapiService.ConsultarStockHANA(items, warehouses);
+        }
+
+        /// <summary>
+        /// Valida las conexiones SQL y SAP
+        /// </summary>
+        public void ValidarConexiones(out bool sqlOk, out bool sapOk, out string sqlError, out string sapError)
+        {
+            sqlOk = connectionManager.TestSQLConnection(out sqlError);
+            sapOk = connectionManager.TestSAPConnection(out sapError);
+        }
+
+        #endregion
+
+        #region Dispose Pattern
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    if (connectionManager != null)
+                    {
+                        connectionManager.Dispose();
+                        connectionManager = null;
+                    }
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~StockService()
+        {
+            Dispose(false);
+        }
+
+        #endregion
+    }
+}
