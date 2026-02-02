@@ -68,9 +68,10 @@
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(90, 25);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(259, 30);
+            this.label7.Size = new System.Drawing.Size(183, 30);
             this.label7.TabIndex = 1;
-            this.label7.Text = "Login SAP Business One";
+            this.label7.Text = "App Ramo Stock";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // pictureBox1
             // 
@@ -224,7 +225,7 @@
             this.MinimizeBox = false;
             this.Name = "FrmLoginSAP";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login SAP Business One";
+            this.Text = "Login App Ramo";
             this.Load += new System.EventHandler(this.FrmLoginSAP_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -198,8 +198,13 @@ namespace RamoUtils
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.CommandTimeout = ConfigHelper.GetQueryTimeout();
-                            cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio.Date);
-                            cmd.Parameters.AddWithValue("@FechaFin", fechaFin.Date);
+                            SqlParameter paramFechaInicio = new SqlParameter("@FechaInicio", SqlDbType.Date);
+                            paramFechaInicio.Value = fechaInicio.Date;
+                            cmd.Parameters.Add(paramFechaInicio);
+
+                            SqlParameter paramFechaFin = new SqlParameter("@FechaFin", SqlDbType.Date);
+                            paramFechaFin.Value = fechaFin.Date;
+                            cmd.Parameters.Add(paramFechaFin);
 
                             using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                             {

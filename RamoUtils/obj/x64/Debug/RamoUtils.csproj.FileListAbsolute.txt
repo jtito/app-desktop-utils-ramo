@@ -37,3 +37,6 @@ C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUti
 C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.pdb
 D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.FrmLoginSAP.resources
 D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.FrmConsultaIntegracion.resources
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.exe.config
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.FrmConsultaIntegracion.resources
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\x64\Debug\RamoUtils.FrmLoginSAP.resources
