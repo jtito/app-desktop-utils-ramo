@@ -36,6 +36,24 @@ namespace RamoUtils
             frmStock.Show();
         }
 
+        private void integracionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Verificar si ya existe el formulario abierto
+            foreach (Form frm in this.MdiChildren)
+            {
+                if (frm is FrmConsultaIntegracion)
+                {
+                    frm.Activate();
+                    return;
+                }
+            }
+
+            // Crear nueva instancia del formulario
+            FrmConsultaIntegracion frmIntegracion = new FrmConsultaIntegracion();
+            frmIntegracion.MdiParent = this;
+            frmIntegracion.Show();
+        }
+
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Está seguro que desea salir?", "Confirmar",

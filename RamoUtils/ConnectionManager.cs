@@ -1,16 +1,20 @@
 using System;
 using System.Data.SqlClient;
+using System.Threading;
 using SAPbobsCOM;
 
 namespace RamoUtils
 {
     /// <summary>
-    /// Gestor centralizado de conexiones a SQL Server y SAP DI API
+    /// Gestor centralizado de conexiones a SQL Server y SAP DI API (Thread-Safe)
     /// </summary>
     public class ConnectionManager : IDisposable
     {
         private Company sapCompany;
         private bool disposed = false;
+        private readonly object lockObject = new object();  // Para thread-safety
+        private int connectionRefCount = 0;  // Contador de referencias
+        private bool useGlobalConnection = true; // Usar conexión global del login
 
         #region SQL Server Connection
 
@@ -52,9 +56,12 @@ namespace RamoUtils
             }
             finally
             {
-                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                if (conn != null)
                 {
-                    conn.Close();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        conn.Close();
+                    }
                     conn.Dispose();
                 }
             }
@@ -62,19 +69,54 @@ namespace RamoUtils
 
         #endregion
 
-        #region SAP DI API Connection
+        #region SAP DI API Connection (Thread-Safe)
 
         /// <summary>
-        /// Obtiene la conexión SAP Company (singleton)
+        /// Obtiene la conexión SAP Company de forma thread-safe
+        /// Usa la conexión global establecida en el login
         /// </summary>
         public Company GetSAPCompany()
         {
-            if (sapCompany == null || !sapCompany.Connected)
+            lock (lockObject)
             {
-                sapCompany = ConnectToSAP();
-            }
+                // Si está habilitado el uso de conexión global y existe
+                if (useGlobalConnection && Program.SAPCompanyGlobal != null && Program.SAPCompanyGlobal.Connected)
+                {
+                    sapCompany = Program.SAPCompanyGlobal;
+                    Interlocked.Increment(ref connectionRefCount);
+                    return sapCompany;
+                }
 
-            return sapCompany;
+                // Si no hay conexión global, intentar crear una nueva (fallback)
+                if (sapCompany == null || !sapCompany.Connected)
+                {
+                    // Limpiar conexión anterior si existe
+                    if (sapCompany != null && sapCompany != Program.SAPCompanyGlobal)
+                    {
+                        try
+                        {
+                            System.Runtime.InteropServices.Marshal.ReleaseComObject(sapCompany);
+                        }
+                        catch { }
+                        sapCompany = null;
+                    }
+
+                    // Crear nueva conexión (solo si hay configuración en App.config)
+                    try
+                    {
+                        sapCompany = ConnectToSAP();
+                    }
+                    catch
+                    {
+                        throw new Exception("No hay conexión SAP disponible. Por favor, reinicie la aplicación e inicie sesión.");
+                    }
+                }
+
+                // Incrementar contador de referencias
+                Interlocked.Increment(ref connectionRefCount);
+
+                return sapCompany;
+            }
         }
 
         /// <summary>
@@ -97,8 +139,6 @@ namespace RamoUtils
                 company.CompanyDB = ConfigHelper.GetSAPCompanyDB();
                 company.UserName = ConfigHelper.GetSAPUserName();
                 company.Password = ConfigHelper.GetSAPPassword();
-                //company.DbUserName = ConfigHelper.GetSAPDbUserName();
-                //company.DbPassword = ConfigHelper.GetSAPDbPassword();
 
                 // Configurar tipo de servidor (HANA)
                 string dbServerType = ConfigHelper.GetSAPDbServerType();
@@ -108,18 +148,20 @@ namespace RamoUtils
                 }
                 else
                 {
-                    // Soportar otros tipos si es necesario
                     company.DbServerType = BoDataServerTypes.dst_HANADB;
                 }
 
-                
+                // Configurar UseTrusted (importante para multiconexión)
+                company.UseTrusted = false;
+
+                // Conectar
                 int result = company.Connect();
 
                 if (result != 0)
                 {
                     string errorMsg = company.GetLastErrorDescription();
                     int errorCode = company.GetLastErrorCode();
-                    
+
                     // Liberar recursos
                     if (company != null)
                     {
@@ -153,54 +195,97 @@ namespace RamoUtils
         }
 
         /// <summary>
-        /// Valida la conexión SAP
+        /// Valida la conexión SAP (usa la conexión global)
         /// </summary>
         public bool TestSAPConnection(out string errorMessage)
         {
             errorMessage = string.Empty;
-            Company testCompany = null;
 
             try
             {
-                testCompany = ConnectToSAP();
-                return testCompany != null && testCompany.Connected;
+                // Verificar conexión global
+                if (Program.SAPCompanyGlobal != null && Program.SAPCompanyGlobal.Connected)
+                {
+                    return true;
+                }
+                else
+                {
+                    errorMessage = "No hay conexión SAP activa";
+                    return false;
+                }
             }
             catch (Exception ex)
             {
                 errorMessage = ex.Message;
                 return false;
             }
-            finally
-            {
-                if (testCompany != null)
-                {
-                    try
-                    {
-                        if (testCompany.Connected)
-                        {
-                            testCompany.Disconnect();
-                        }
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(testCompany);
-                    }
-                    catch { }
-                }
-            }
         }
 
         /// <summary>
-        /// Crea un RecordSet para ejecutar queries en SAP HANA
+        /// Crea un RecordSet para ejecutar queries en SAP HANA (Thread-Safe)
         /// </summary>
         public Recordset CreateRecordset()
         {
             try
             {
                 Company company = GetSAPCompany();
-                Recordset recordset = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
-                return recordset;
+
+                lock (lockObject)
+                {
+                    Recordset recordset = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
+                    return recordset;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error al crear RecordSet: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Libera un RecordSet de forma segura
+        /// </summary>
+        public void ReleaseRecordset(Recordset recordset)
+        {
+            if (recordset != null)
+            {
+                try
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(recordset);
+
+                    // Decrementar contador de referencias
+                    Interlocked.Decrement(ref connectionRefCount);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al liberar RecordSet: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Forzar reconexión (útil cuando la conexión se pierde)
+        /// </summary>
+        public void ForceReconnect()
+        {
+            lock (lockObject)
+            {
+                // No desconectar la conexión global
+                if (sapCompany != null && sapCompany != Program.SAPCompanyGlobal)
+                {
+                    try
+                    {
+                        if (sapCompany.Connected)
+                        {
+                            sapCompany.Disconnect();
+                        }
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(sapCompany);
+                    }
+                    catch { }
+                    sapCompany = null;
+                }
+
+                connectionRefCount = 0;
             }
         }
 
@@ -221,21 +306,36 @@ namespace RamoUtils
                 if (disposing)
                 {
                     // Liberar recursos administrados
+                    System.Diagnostics.Debug.WriteLine($"Disposing ConnectionManager. Referencias activas: {connectionRefCount}");
                 }
 
-                // Desconectar SAP
-                if (sapCompany != null)
+                // NO desconectar SAP si es la conexión global (se maneja en Program.cs)
+                lock (lockObject)
                 {
-                    try
+                    if (sapCompany != null && sapCompany != Program.SAPCompanyGlobal)
                     {
-                        if (sapCompany.Connected)
+                        try
                         {
-                            sapCompany.Disconnect();
+                            if (sapCompany.Connected)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Desconectando de SAP...");
+                                sapCompany.Disconnect();
+                                System.Diagnostics.Debug.WriteLine("SAP desconectado exitosamente");
+                            }
+
+                            System.Runtime.InteropServices.Marshal.ReleaseComObject(sapCompany);
                         }
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(sapCompany);
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error al desconectar SAP: {ex.Message}");
+                        }
+                        finally
+                        {
+                            sapCompany = null;
+                        }
                     }
-                    catch { }
-                    sapCompany = null;
+                    
+                    connectionRefCount = 0;
                 }
 
                 disposed = true;

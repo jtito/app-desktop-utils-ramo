@@ -34,138 +34,151 @@ namespace RamoUtils
             public string ItemName { get; set; }
             public string WhsCode { get; set; }
             public decimal CantidadRequerida { get; set; }
+            public decimal CantidadRequeridaBase { get; set; }  // Nueva: cantidad en unidad base
             public decimal StockDisponible { get; set; }
             public decimal Faltante { get; set; }
             public int UomEntry { get; set; }
             public decimal FactorConversion { get; set; }
+            public string MensajeError { get; set; }
+            public string UomCode { get; set; }
+            public string UomName { get; set; }
         }
 
         /// <summary>
-        /// Consulta artículos sin stock suficiente por fecha (ULTRA-OPTIMIZADO)
+        /// Consulta artículos sin stock suficiente por fecha
         /// </summary>
         public List<ArticuloSinStock> ConsultarStockPorFecha(DateTime fecha)
+        {
+            return ConsultarStockPorRangoFechas(fecha, fecha);
+        }
+
+        /// <summary>
+        /// Consulta artículos sin stock suficiente por rango de fechas
+        /// </summary>
+        public List<ArticuloSinStock> ConsultarStockPorRangoFechas(DateTime fechaInicio, DateTime fechaFin)
         {
             List<ArticuloSinStock> resultado = new List<ArticuloSinStock>();
 
             try
             {
-                // 1. Obtener artículos pendientes de SQL por fecha
-                DataTable pendientes = ObtenerArticulosPendientesSQL(fecha);
+                // 1. Obtener artículos pendientes de SQL por rango de fechas
+                DataTable pendientes = ObtenerArticulosPendientesSQLRango(fechaInicio, fechaFin);
 
                 if (pendientes.Rows.Count == 0)
                     return resultado;
 
-                // 2. Obtener stock de HANA por lotes (con pre-carga de UoM)
-                DataTable stockHana = diapiService.ConsultarStockHANAPorLotes(pendientes);
+                // 2. Extraer códigos únicos
+                List<string> itemCodes = pendientes.AsEnumerable()
+                    .Select(r => r.Field<string>("ItemCode"))
+                    .Distinct()
+                    .ToList();
 
-                // 3. Crear índices para búsqueda O(1)
-                var stockPorItemCode = new Dictionary<string, List<DataRow>>();
-                var stockPorItemWhs = new Dictionary<string, DataRow>();
+                List<string> whsCodes = pendientes.AsEnumerable()
+                    .Select(r => r.Field<string>("WhsCode"))
+                    .Where(w => !string.IsNullOrEmpty(w))
+                    .Distinct()
+                    .ToList();
 
-                foreach (DataRow row in stockHana.Rows)
-                {
-                    string itemCode = row["ItemCode"]?.ToString() ?? "";
-                    string whsCode = row["WhsCode"]?.ToString() ?? "";
+                if (itemCodes.Count == 0)
+                    return resultado;
 
-                    if (string.IsNullOrEmpty(itemCode))
-                        continue;
+                // 3. Obtener stock de HANA usando DI API
+                DataTable stockHana = ObtenerStockHANA(itemCodes, whsCodes);
 
-                    // Índice por ItemCode + WhsCode
-                    string key = $"{itemCode}|{whsCode}";
-                    if (!stockPorItemWhs.ContainsKey(key))
-                    {
-                        stockPorItemWhs[key] = row;
-                    }
+                List<int> uomEntries = pendientes.AsEnumerable()
+                .Where(r => r["UomEntry"] != DBNull.Value)
+                .Select(r => Convert.ToInt32(r["UomEntry"]))
+                .Distinct()
+                .ToList();
 
-                    // Índice por ItemCode solo
-                    if (!stockPorItemCode.ContainsKey(itemCode))
-                    {
-                        stockPorItemCode[itemCode] = new List<DataRow>();
-                    }
-                    stockPorItemCode[itemCode].Add(row);
-                }
+                Dictionary<int, Tuple<string, string>> uomInfo = diapiService.ObtenerInformacionUoM(uomEntries);
 
-                // 4. Procesar cada detalle de factura
+                // 4. Comparar y generar reporte
                 foreach (DataRow row in pendientes.Rows)
                 {
-                    string itemCode = row["ItemCode"]?.ToString() ?? "";
+                    string itemCode = row["ItemCode"].ToString();
                     string whsCode = row["WhsCode"]?.ToString() ?? "";
-                    //string docNum = row["DocNum"]?.ToString() ?? "";
-                    
-                    if (string.IsNullOrEmpty(itemCode))
-                        continue;
-
-                    decimal cantidad = row["Quantity"] != DBNull.Value 
-                        ? Convert.ToDecimal(row["Quantity"]) 
-                        : 0m;
-
-                    int uomEntry = row["UomEntry"] != DBNull.Value 
-                        ? Convert.ToInt32(row["UomEntry"]) 
-                        : 0;
-
-                    // Obtener factor de conversión (ya está en caché)
+                    decimal cantidadRequerida = Convert.ToDecimal(row["Quantity"]);
+                    string mensajeError = row["Mensaje"]?.ToString() ?? "";
+                    int uomEntry = row["UomEntry"] != DBNull.Value ? Convert.ToInt32(row["UomEntry"]) : 0;
                     decimal factorConversion = diapiService.ObtenerFactorConversionUoM(itemCode, uomEntry);
+                    decimal cantidadRequeridaBase = cantidadRequerida * factorConversion;
 
-                    // Calcular cantidad en unidad base
-                    decimal cantidadBase = cantidad * factorConversion;
-
-                    // Buscar stock en índice O(1)
+                    if (uomEntry > 0)
+                    {
+                        factorConversion = diapiService.ObtenerFactorConversionUoM(itemCode, uomEntry);
+                    }
+                    
+                    // Buscar stock en HANA
                     decimal stockDisponible = 0;
                     string itemName = "";
-                    string key = $"{itemCode}|{whsCode}";
 
-                    if (stockPorItemWhs.ContainsKey(key))
+                    if (!string.IsNullOrEmpty(whsCode))
                     {
-                        // Encontrado con WhsCode específico
-                        DataRow stockRow = stockPorItemWhs[key];
-                        stockDisponible = stockRow["StockReal"] != DBNull.Value
-                            ? Convert.ToDecimal(stockRow["StockReal"])
-                            : 0m;
-                        itemName = stockRow["ItemName"]?.ToString() ?? "";
+                        DataRow[] stockRows = stockHana.Select(
+                            $"ItemCode = '{itemCode}' AND WhsCode = '{whsCode}'");
+
+                        if (stockRows.Length > 0)
+                        {
+                            stockDisponible = Convert.ToDecimal(stockRows[0]["StockReal"]);
+                            itemName = stockRows[0]["ItemName"].ToString();
+                        }
                     }
-                    else if (stockPorItemCode.ContainsKey(itemCode))
+                    else
                     {
-                        // Sumar todos los almacenes
-                        var stockRows = stockPorItemCode[itemCode];
-                        stockDisponible = stockRows
-                            .Where(r => r["StockReal"] != DBNull.Value)
-                            .Sum(r => Convert.ToDecimal(r["StockReal"]));
-                        itemName = stockRows[0]["ItemName"]?.ToString() ?? "";
+                        // Si no hay almacén específico, sumar todos los almacenes
+                        DataRow[] stockRows = stockHana.Select($"ItemCode = '{itemCode}'");
+                        if (stockRows.Length > 0)
+                        {
+                            stockDisponible = stockRows.Sum(r => Convert.ToDecimal(r["StockReal"]));
+                            itemName = stockRows[0]["ItemName"].ToString();
+                        }
+                    }
+
+                    // Obtener información de UoM
+                    string uomCode = "";
+                    string uomName = "";
+                    if (uomEntry > 0 && uomInfo.ContainsKey(uomEntry))
+                    {
+                        uomCode = uomInfo[uomEntry].Item1;
+                        uomName = uomInfo[uomEntry].Item2;
                     }
 
                     // Si no hay stock suficiente, agregar al reporte
-                    if (stockDisponible < cantidadBase)
+                    if (stockDisponible < cantidadRequeridaBase)
                     {
                         resultado.Add(new ArticuloSinStock
                         {
-                            //NumeroFactura = docNum,
                             ItemCode = itemCode,
                             ItemName = itemName,
                             WhsCode = whsCode,
-                            CantidadRequerida = cantidadBase,
-                            StockDisponible = Math.Max(0, stockDisponible),
-                            Faltante = cantidadBase - Math.Max(0, stockDisponible),
+                            CantidadRequerida = cantidadRequerida,  // Cantidad original (ej: 2 CAJAS)
+                            CantidadRequeridaBase = cantidadRequeridaBase,  // Cantidad convertida (ej: 48 UND)
+                            StockDisponible = Math.Max(0, stockDisponible),  // Stock en unidad base
+                            Faltante = cantidadRequeridaBase - Math.Max(0, stockDisponible),  // Diferencia en unidad base
+                            MensajeError = mensajeError,
                             UomEntry = uomEntry,
+                            UomCode = uomCode,
+                            UomName = uomName,
                             FactorConversion = factorConversion
                         });
                     }
                 }
 
-                return resultado.OrderBy(x => x.NumeroFactura).ThenBy(x => x.ItemCode).ToList();
+                return resultado.OrderBy(x => x.ItemCode).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error al consultar stock por fecha: {ex.Message}", ex);
+                throw new Exception($"Error al consultar stock por rango de fechas: {ex.Message}", ex);
             }
         }
 
         #region Métodos SQL Server
 
         /// <summary>
-        /// Obtiene artículos pendientes desde SQL Server
-        /// Puede usar Stored Procedure o consulta directa
+        /// Obtiene artículos pendientes desde SQL Server por rango de fechas
         /// </summary>
-        private DataTable ObtenerArticulosPendientesSQL(DateTime fecha)
+        private DataTable ObtenerArticulosPendientesSQLRango(DateTime fechaInicio, DateTime fechaFin)
         {
             DataTable dt = new DataTable();
 
@@ -185,7 +198,8 @@ namespace RamoUtils
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.CommandTimeout = ConfigHelper.GetQueryTimeout();
-                            cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+                            cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio.Date);
+                            cmd.Parameters.AddWithValue("@FechaFin", fechaFin.Date);
 
                             using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                             {
@@ -200,27 +214,29 @@ namespace RamoUtils
                         string tablaDetalle = ConfigHelper.GetSQLTablaDetalle();
 
                         string query = $@"
-                            SELECT 
-                                C.NroOperacion AS DocNum,
-                                C.IdVenta AS DocEntry,
-                                D.SAP_ItemCode AS ItemCode,
-                                D.Cantidad AS Quantity,
-                                OC.U_SEIN_ALMA AS WhsCode,
-                                C.FechaEmision AS DocDate,
-                                D.SAP_UoMEntry AS UomEntry
-                            FROM {tablaDetalle} D
-                            INNER JOIN {tablaEncabezado} C ON D.IdVenta = C.IdVenta
-                            INNER JOIN OCRD OC ON OC.CardCode = C.SAP_CodigoCaja
-                            WHERE C.SAP_Estado IN ('A', 'E')
-                            AND CAST(C.FechaEmision AS DATE) = @Fecha
-                            AND C.SAP_ObjType <> 14
-                            AND D.SAP_ItemCode IS NOT NULL
-                            ORDER BY C.NroOperacion, D.SAP_ItemCode";
+                        SELECT 
+                            C.NroOperacion AS DocNum,
+                            C.IdVenta AS DocEntry,
+                            D.SAP_ItemCode AS ItemCode,
+                            D.Cantidad AS Quantity,
+                            OC.U_SEIN_ALMA AS WhsCode,
+                            C.FechaEmision AS DocDate,
+                            D.SAP_UoMEntry AS UomEntry,
+                            C._ISMensajeError AS Mensaje
+                        FROM {tablaDetalle} D
+                        INNER JOIN {tablaEncabezado} C ON D.IdVenta = C.IdVenta
+                        INNER JOIN OCRD OC ON OC.CardCode = C.SAP_CodigoCaja
+                        WHERE C.SAP_Estado IN ('A', 'E')
+                        AND CAST(C.FechaEmision AS DATE) BETWEEN @FechaInicio AND @FechaFin
+                        AND C.SAP_ObjType <> 14
+                        AND D.SAP_ItemCode IS NOT NULL
+                        ORDER BY C.NroOperacion, D.SAP_ItemCode";
 
                         using (SqlCommand cmd = new SqlCommand(query, conn))
                         {
                             cmd.CommandTimeout = ConfigHelper.GetQueryTimeout();
-                            cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+                            cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio.Date);
+                            cmd.Parameters.AddWithValue("@FechaFin", fechaFin.Date);
 
                             using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                             {
@@ -236,6 +252,15 @@ namespace RamoUtils
             {
                 throw new Exception($"Error al obtener artículos pendientes de SQL: {ex.Message}", ex);
             }
+        }
+
+        /// <summary>
+        /// Obtiene artículos pendientes desde SQL Server
+        /// Puede usar Stored Procedure o consulta directa
+        /// </summary>
+        private DataTable ObtenerArticulosPendientesSQL(DateTime fecha)
+        {
+            return ObtenerArticulosPendientesSQLRango(fecha, fecha);
         }
 
         #endregion

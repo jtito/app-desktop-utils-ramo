@@ -33,6 +33,7 @@ namespace RamoUtils
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarStockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.integracionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,8 @@ namespace RamoUtils
             // consultasToolStripMenuItem
             // 
             this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.consultarStockToolStripMenuItem});
+            this.consultarStockToolStripMenuItem,
+            this.integracionToolStripMenuItem});
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             this.consultasToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.consultasToolStripMenuItem.Text = "&Consultas";
@@ -76,6 +78,13 @@ namespace RamoUtils
             this.consultarStockToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.consultarStockToolStripMenuItem.Text = "Consultar &Stock";
             this.consultarStockToolStripMenuItem.Click += new System.EventHandler(this.consultarStockToolStripMenuItem_Click);
+            // 
+            // integracionToolStripMenuItem
+            // 
+            this.integracionToolStripMenuItem.Name = "integracionToolStripMenuItem";
+            this.integracionToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.integracionToolStripMenuItem.Text = "&Integración";
+            this.integracionToolStripMenuItem.Click += new System.EventHandler(this.integracionToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 
@@ -102,5 +111,6 @@ namespace RamoUtils
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultarStockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem integracionToolStripMenuItem;
     }
 }

@@ -10,3 +10,15 @@ D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\bin\Debug\RamoUtils.dll
 D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\bin\Debug\RamoUtils.pdb
 D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.dll
 D:\JTITO\NAVARRETE\WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.pdb
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\bin\Debug\RamoUtils.exe.config
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\bin\Debug\RamoUtils.exe
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\bin\Debug\RamoUtils.pdb
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.csproj.AssemblyReference.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.csproj.ResolveComReference.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.FrmConsultaStock.resources
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.csproj.GenerateResource.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.csproj.CoreCompileInputs.cache
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.exe
+C:\Program Files\FEPLUS PROD\APP WFORM\RamoUtils\RamoUtils\obj\Debug\RamoUtils.pdb

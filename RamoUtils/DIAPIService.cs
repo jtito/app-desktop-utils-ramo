@@ -12,7 +12,7 @@ namespace RamoUtils
     public class DIAPIService
     {
         private ConnectionManager connectionManager;
-        private const int BATCH_SIZE = 500; // Aumentado para reducir round-trips
+        private const int BATCH_SIZE = 200; // Tamaño óptimo de lote
         private Dictionary<string, decimal> cacheFactoresUoM; // Caché de factores de conversión
 
         public DIAPIService(ConnectionManager connManager)
@@ -50,43 +50,82 @@ namespace RamoUtils
             }
             finally
             {
-                if (rs != null)
-                {
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(rs);
-                }
+                // Usar el método seguro de liberación
+                connectionManager.ReleaseRecordset(rs);
             }
         }
 
         /// <summary>
-        /// Ejecuta una consulta SQL directa en SAP HANA
+        /// Ejecuta una consulta SQL directa en SAP HANA con retry automático
         /// </summary>
         public DataTable ExecuteQuery(string query)
         {
             Recordset rs = null;
             DataTable dt = new DataTable();
+            int retryCount = 0;
+            const int maxRetries = 2;
 
-            try
+            while (retryCount <= maxRetries)
             {
-                rs = connectionManager.CreateRecordset();
-                rs.DoQuery(query);
-                dt = RecordsetToDataTable(rs);
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al ejecutar query: {ex.Message}", ex);
-            }
-            finally
-            {
-                if (rs != null)
+                try
                 {
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(rs);
+                    rs = connectionManager.CreateRecordset();
+                    rs.DoQuery(query);
+                    dt = RecordsetToDataTable(rs);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    // Liberar recordset si existe
+                    if (rs != null)
+                    {
+                        connectionManager.ReleaseRecordset(rs);
+                        rs = null;
+                    }
+
+                    // Si es error de conexión y no hemos agotado los reintentos
+                    if (retryCount < maxRetries && IsConnectionError(ex))
+                    {
+                        retryCount++;
+                        System.Diagnostics.Debug.WriteLine($"Error de conexión. Reintento {retryCount}/{maxRetries}...");
+
+                        // Forzar reconexión
+                        connectionManager.ForceReconnect();
+
+                        // Esperar un poco antes de reintentar
+                        System.Threading.Thread.Sleep(1000);
+                        continue;
+                    }
+
+                    throw new Exception($"Error al ejecutar query: {ex.Message}", ex);
+                }
+                finally
+                {
+                    if (rs != null)
+                    {
+                        connectionManager.ReleaseRecordset(rs);
+                    }
                 }
             }
+
+            throw new Exception("No se pudo ejecutar la consulta después de varios intentos");
         }
 
         /// <summary>
-        /// Consulta el stock disponible en SAP HANA por artículo y almacén (método legacy)
+        /// Determina si un error es de conexión
+        /// </summary>
+        private bool IsConnectionError(Exception ex)
+        {
+            string message = ex.Message.ToLower();
+            return message.Contains("connection") ||
+                   message.Contains("timeout") ||
+                   message.Contains("network") ||
+                   message.Contains("communication") ||
+                   message.Contains("server");
+        }
+
+        /// <summary>
+        /// Consulta el stock disponible en SAP HANA por artículo y almacén
         /// </summary>
         public DataTable ConsultarStockHANA(List<string> itemCodes, List<string> whsCodes = null)
         {
@@ -162,7 +201,7 @@ namespace RamoUtils
         }
 
         /// <summary>
-        /// Consulta stock de HANA por lotes (OPTIMIZADO para grandes volúmenes)
+        /// Consulta stock de HANA por lotes
         /// </summary>
         public DataTable ConsultarStockHANAPorLotes(DataTable facturasPendientes)
         {
@@ -173,31 +212,32 @@ namespace RamoUtils
                 if (facturasPendientes == null || facturasPendientes.Rows.Count == 0)
                     return resultadoCompleto;
 
-                // PRE-CARGAR TODOS LOS FACTORES UoM EN UNA SOLA CONSULTA
-                PreCargarFactoresUoM(facturasPendientes);
-
-                // Extraer solo ItemCodes únicos (consultar todos los almacenes)
-                var itemCodesUnicos = facturasPendientes.AsEnumerable()
-                    .Select(row => row.Field<string>("ItemCode"))
-                    .Where(x => !string.IsNullOrEmpty(x))
+                // Agrupar por combinación única ItemCode + WhsCode
+                var combinacionesUnicas = facturasPendientes.AsEnumerable()
+                    .Select(row => new ItemWhsKey
+                    {
+                        ItemCode = row.Field<string>("ItemCode"),
+                        WhsCode = row.Field<string>("WhsCode") ?? ""
+                    })
+                    .Where(x => !string.IsNullOrEmpty(x.ItemCode))
                     .Distinct()
                     .ToList();
 
-                if (itemCodesUnicos.Count == 0)
+                if (combinacionesUnicas.Count == 0)
                     return resultadoCompleto;
 
-                // Procesar en lotes MÁS GRANDES
-                int totalLotes = (int)Math.Ceiling((double)itemCodesUnicos.Count / BATCH_SIZE);
+                // Procesar en lotes
+                int totalLotes = (int)Math.Ceiling((double)combinacionesUnicas.Count / BATCH_SIZE);
 
                 for (int lote = 0; lote < totalLotes; lote++)
                 {
-                    var itemsLote = itemCodesUnicos
+                    var itemsLote = combinacionesUnicas
                         .Skip(lote * BATCH_SIZE)
                         .Take(BATCH_SIZE)
                         .ToList();
 
-                    DataTable stockLote = ConsultarStockLoteOptimizado(itemsLote);
-                    
+                    DataTable stockLote = ConsultarStockLote(itemsLote);
+
                     // Combinar resultados
                     foreach (DataRow row in stockLote.Rows)
                     {
@@ -210,120 +250,6 @@ namespace RamoUtils
             catch (Exception ex)
             {
                 throw new Exception($"Error al consultar stock por lotes: {ex.Message}", ex);
-            }
-        }
-
-        /// <summary>
-        /// PRE-CARGA todos los factores UoM en UNA SOLA consulta batch
-        /// </summary>
-        private void PreCargarFactoresUoM(DataTable facturasPendientes)
-        {
-            try
-            {
-                // Extraer combinaciones únicas de ItemCode + UomEntry
-                var combinacionesUom = facturasPendientes.AsEnumerable()
-                    .Where(r => r["UomEntry"] != DBNull.Value && Convert.ToInt32(r["UomEntry"]) > 0)
-                    .Select(r => new
-                    {
-                        ItemCode = r.Field<string>("ItemCode"),
-                        UomEntry = Convert.ToInt32(r["UomEntry"])
-                    })
-                    .Where(x => !string.IsNullOrEmpty(x.ItemCode))
-                    .Distinct()
-                    .ToList();
-
-                if (combinacionesUom.Count == 0)
-                    return;
-
-                // Construir IN clauses
-                var itemsList = string.Join(",", combinacionesUom
-                    .Select(x => $"'{EscapeSQLString(x.ItemCode)}'")
-                    .Distinct());
-
-                var uomsList = string.Join(",", combinacionesUom
-                    .Select(x => x.UomEntry)
-                    .Distinct());
-
-                // UNA SOLA consulta para TODOS los factores
-                string query = $@"
-                    SELECT 
-                        T0.""ItemCode"",
-                        U.""UomEntry"",
-                        U.""BaseQty"" AS ""Factor""
-                    FROM ""OITM"" T0
-                    INNER JOIN ""UGP1"" U ON T0.""UgpEntry"" = U.""UgpEntry""
-                    WHERE T0.""ItemCode"" IN ({itemsList})
-                      AND U.""UomEntry"" IN ({uomsList})";
-
-                DataTable factores = ExecuteQuery(query);
-
-                // Poblar caché
-                foreach (DataRow row in factores.Rows)
-                {
-                    string itemCode = row["ItemCode"].ToString();
-                    int uomEntry = Convert.ToInt32(row["UomEntry"]);
-                    decimal factor = row["Factor"] != DBNull.Value 
-                        ? Convert.ToDecimal(row["Factor"]) 
-                        : 1m;
-
-                    string cacheKey = $"{itemCode}_{uomEntry}";
-                    cacheFactoresUoM[cacheKey] = factor;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Si falla la pre-carga, continuamos con factores = 1
-                System.Diagnostics.Debug.WriteLine($"Advertencia pre-carga UoM: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Consulta un lote de artículos OPTIMIZADO (sin filtro de WhsCode)
-        /// </summary>
-        private DataTable ConsultarStockLoteOptimizado(List<string> itemCodes)
-        {
-            Recordset rs = null;
-            DataTable dt = CrearEstructuraStockTable();
-
-            try
-            {
-                rs = connectionManager.CreateRecordset();
-
-                // Construir lista con comillas
-                string itemsList = string.Join(",", itemCodes.Select(i => $"'{EscapeSQLString(i)}'"));
-
-                // Query SIN filtro de WhsCode (consultar todos los almacenes)
-                string query = $@"
-                    SELECT 
-                        T0.""ItemCode"",
-                        T0.""ItemName"",
-                        T1.""WhsCode"",
-                        T1.""OnHand"" AS ""StockDisponible"",
-                        T1.""IsCommited"" AS ""Comprometido"",
-                        (T1.""OnHand"" - T1.""IsCommited"") AS ""StockReal"",
-                        T0.""InvntryUom"" AS ""BaseUoM"",
-                        T0.""UgpEntry""
-                    FROM ""OITM"" T0
-                    INNER JOIN ""OITW"" T1 ON T0.""ItemCode"" = T1.""ItemCode""
-                    WHERE T0.""ItemCode"" IN ({itemsList})
-                      AND T0.""InvntItem"" = 'Y'
-                    ORDER BY T0.""ItemCode"", T1.""WhsCode""";
-
-                rs.DoQuery(query);
-                dt = RecordsetToDataTable(rs);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error en lote de consulta: {ex.Message}", ex);
-            }
-            finally
-            {
-                if (rs != null)
-                {
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(rs);
-                }
             }
         }
 
@@ -376,10 +302,8 @@ namespace RamoUtils
             }
             finally
             {
-                if (rs != null)
-                {
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(rs);
-                }
+                // Usar el método seguro de liberación
+                connectionManager.ReleaseRecordset(rs);
             }
         }
 
@@ -425,22 +349,60 @@ namespace RamoUtils
         }
 
         /// <summary>
-        /// Obtiene el factor de conversión desde caché (ya no consulta HANA)
+        /// Obtiene el factor de conversión de UoM desde HANA con caché
         /// </summary>
         public decimal ObtenerFactorConversionUoM(string itemCode, int uomEntry)
         {
-            if (uomEntry <= 0)
-                return 1m;
-
+            // Verificar caché primero
             string cacheKey = $"{itemCode}_{uomEntry}";
-            
+
             if (cacheFactoresUoM.ContainsKey(cacheKey))
             {
                 return cacheFactoresUoM[cacheKey];
             }
 
-            // Si no está en caché, retornar 1 (ya debería estar pre-cargado)
-            return 1m;
+            Recordset rs = null;
+
+            try
+            {
+                rs = connectionManager.CreateRecordset();
+
+                string query = $@"
+                    SELECT 
+                        U.""BaseQty"" AS ""Factor""
+                    FROM ""OITM"" T0
+                    INNER JOIN ""UGP1"" U ON T0.""UgpEntry"" = U.""UgpEntry""
+                    WHERE T0.""ItemCode"" = '{EscapeSQLString(itemCode)}'
+                      AND U.""UomEntry"" = {uomEntry}";
+
+                rs.DoQuery(query);
+
+                decimal factor = 1m;
+
+                if (!rs.EoF)
+                {
+                    object value = rs.Fields.Item("Factor").Value;
+                    if (value != null && value != DBNull.Value)
+                    {
+                        factor = Convert.ToDecimal(value);
+                    }
+                }
+
+                // Guardar en caché
+                cacheFactoresUoM[cacheKey] = factor;
+
+                return factor;
+            }
+            catch
+            {
+                // Si hay error, retornar 1 (unidad base)
+                return 1m;
+            }
+            finally
+            {
+                // Usar el método seguro de liberación
+                connectionManager.ReleaseRecordset(rs);
+            }
         }
 
         /// <summary>
@@ -458,6 +420,66 @@ namespace RamoUtils
             dt.Columns.Add("BaseUoM", typeof(string));
             dt.Columns.Add("UgpEntry", typeof(int));
             return dt;
+        }
+
+        /// <summary>
+        /// Obtiene información de unidades de medida (código y nombre) desde OUOM
+        /// </summary>
+        public Dictionary<int, Tuple<string, string>> ObtenerInformacionUoM(List<int> uomEntries)
+        {
+            Dictionary<int, Tuple<string, string>> resultado = new Dictionary<int, Tuple<string, string>>();
+
+            if (uomEntries == null || uomEntries.Count == 0)
+                return resultado;
+
+            Recordset rs = null;
+
+            try
+            {
+                rs = connectionManager.CreateRecordset();
+
+                // Construir lista de UomEntry
+                string uomList = string.Join(",", uomEntries.Where(u => u > 0).Distinct());
+
+                if (string.IsNullOrEmpty(uomList))
+                    return resultado;
+
+                string query = $@"
+                    SELECT 
+                        ""UomEntry"",
+                        ""UomCode"",
+                        ""UomName""
+                    FROM ""OUOM""
+                    WHERE ""UomEntry"" IN ({uomList})";
+
+                rs.DoQuery(query);
+
+                if (rs.RecordCount > 0)
+                {
+                    rs.MoveFirst();
+                    while (!rs.EoF)
+                    {
+                        int uomEntry = Convert.ToInt32(rs.Fields.Item("UomEntry").Value);
+                        string uomCode = rs.Fields.Item("UomCode").Value?.ToString() ?? "";
+                        string uomName = rs.Fields.Item("UomName").Value?.ToString() ?? "";
+
+                        resultado[uomEntry] = new Tuple<string, string>(uomCode, uomName);
+
+                        rs.MoveNext();
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener información de UoM: {ex.Message}", ex);
+            }
+            finally
+            {
+                // Usar el método seguro de liberación
+                connectionManager.ReleaseRecordset(rs);
+            }
         }
 
         #region Helper Methods

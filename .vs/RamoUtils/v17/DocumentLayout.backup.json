@@ -3,69 +3,110 @@
   "WorkspaceRootPath": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\diapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\diapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultaintegracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultaintegracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\stockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\stockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\connectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\connectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\confighelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\confighelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\confighelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\guia_de_uso.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\guia_de_uso.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\connectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\connectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultaintegracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultaintegracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultastock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\cambios_realizados.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\cambios_realizados.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmloginsap.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\joseph.tito\\AppData\\Local\\Temp\\26\\.vsdbgsrc\\3933a443edc8c13a8ec14a7f4d2196cd79c1d2d9f93cdf495e65585c71e37122\\UserControlTestContainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultastock.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultastock.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmloginsap.resx||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.resx||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultaintegracion.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultaintegracion.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmconsultaintegracion.resx||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmconsultaintegracion.resx||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|d:\\jtito\\navarrete\\wform\\ramoutils\\ramoutils\\frmprincipal.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmprincipal.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 0,
+      "Orientation": 1,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "DockedHeight": 528,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DIAPIService.cs",
-              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\DIAPIService.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\DIAPIService.cs",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\DIAPIService.cs",
-              "RelativeToolTip": "RamoUtils\\DIAPIService.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAIwGUBAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ConfigHelper.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\ConfigHelper.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\ConfigHelper.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\ConfigHelper.cs",
+              "RelativeToolTip": "RamoUtils\\ConfigHelper.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAADwvykAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T23:01:43.887Z",
+              "WhenOpened": "2026-02-02T21:08:36.288Z",
               "EditorCaption": ""
             },
             {
@@ -81,16 +122,160 @@
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StockService.cs",
-              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\StockService.cs",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
-              "RelativeToolTip": "RamoUtils\\StockService.cs",
-              "ViewState": "AgIAAAIBAAAAAAAAAAAiwGsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "FrmPrincipal.cs [Design]",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs [Design]",
+              "RelativeToolTip": "RamoUtils\\FrmPrincipal.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:28:24.004Z",
+              "WhenOpened": "2026-02-02T21:06:41.811Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FrmConsultaIntegracion.cs [Design]",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaIntegracion.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.cs [Design]",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaIntegracion.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T21:06:36.699Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FrmPrincipal.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
+              "RelativeToolTip": "RamoUtils\\FrmPrincipal.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAjwCgAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:51:09.906Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "FrmPrincipal.Designer.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.Designer.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.Designer.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.Designer.cs",
+              "RelativeToolTip": "RamoUtils\\FrmPrincipal.Designer.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAIBZwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:50:48.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "FrmConsultaIntegracion.resx",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.resx",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaIntegracion.resx",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.resx",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaIntegracion.resx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-02-02T20:50:31.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "FrmConsultaIntegracion.Designer.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.Designer.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaIntegracion.Designer.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.Designer.cs",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaIntegracion.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:50:19.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmConsultaIntegracion.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaIntegracion.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.cs",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaIntegracion.cs",
+              "ViewState": "AgIAANEAAAAAAAAAAAAUwN8AAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:49:50.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FrmLoginSAP.cs [Design]",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs [Design]",
+              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:33:25.979Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GUIA_DE_USO.md",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\GUIA_DE_USO.md",
+              "RelativeDocumentMoniker": "RamoUtils\\GUIA_DE_USO.md",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\GUIA_DE_USO.md",
+              "RelativeToolTip": "RamoUtils\\GUIA_DE_USO.md",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAiwG0AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-02-02T20:22:49.136Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CAMBIOS_REALIZADOS.md",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\CAMBIOS_REALIZADOS.md",
+              "RelativeDocumentMoniker": "RamoUtils\\CAMBIOS_REALIZADOS.md",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\CAMBIOS_REALIZADOS.md",
+              "RelativeToolTip": "RamoUtils\\CAMBIOS_REALIZADOS.md",
+              "ViewState": "AgIAAPMAAAAAAAAAAADwvwUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-02-02T20:22:01.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FrmLoginSAP.resx",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.resx",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.resx",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.resx",
+              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.resx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHoAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-02-02T20:21:07.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FrmConsultaStock.Designer.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.Designer.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.Designer.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.Designer.cs",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaStock.Designer.cs",
+              "ViewState": "AgIAALIAAAAAAAAAAEBVwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:19:07.862Z",
               "EditorCaption": ""
             },
             {
@@ -101,112 +286,105 @@
               "RelativeDocumentMoniker": "RamoUtils\\ConnectionManager.cs",
               "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\ConnectionManager.cs",
               "RelativeToolTip": "RamoUtils\\ConnectionManager.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAiwGIAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAFABAAAAAAAAAAAUwFwBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:28:07.225Z"
+              "WhenOpened": "2026-02-02T20:15:33.275Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 15,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\Program.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\Program.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\Program.cs",
+              "RelativeToolTip": "RamoUtils\\Program.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAEBVwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:14:18.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "FrmLoginSAP.Designer.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.Designer.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.Designer.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.Designer.cs",
+              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.Designer.cs",
+              "ViewState": "AgIAAPsAAAAAAAAAAAAvwAUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:14:07.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FrmLoginSAP.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
+              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.cs",
+              "ViewState": "AgIAAKgAAAAAAAAAAIAwwLcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:13:24.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "App.config",
               "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\App.config",
               "RelativeDocumentMoniker": "RamoUtils\\App.config",
               "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\App.config",
               "RelativeToolTip": "RamoUtils\\App.config",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACIAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAACIAAAAAAAAAAAAuwDIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-11-26T21:22:28.212Z",
+              "WhenOpened": "2026-02-02T19:59:01.138Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "StockService.cs",
+              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\StockService.cs",
+              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
+              "RelativeToolTip": "RamoUtils\\StockService.cs",
+              "ViewState": "AgIAALUAAAAAAAAAAAAiwMQAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T19:56:24.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "FrmConsultaStock.cs",
               "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
               "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.cs",
               "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
               "RelativeToolTip": "RamoUtils\\FrmConsultaStock.cs",
-              "ViewState": "AgIAAJwAAAAAAAAAAAAEwKUAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAFsCAAAAAAAAAAAiwEwBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:21:36.658Z",
+              "WhenOpened": "2026-02-02T19:53:49.58Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ConfigHelper.cs",
-              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\ConfigHelper.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\ConfigHelper.cs",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\ConfigHelper.cs",
-              "RelativeToolTip": "RamoUtils\\ConfigHelper.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAiwCoAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:21:24.906Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "FrmConsultaStock.cs [Design]",
               "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
               "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.cs",
               "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs [Design]",
               "RelativeToolTip": "RamoUtils\\FrmConsultaStock.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:21:34.761Z",
+              "WhenOpened": "2026-02-02T19:53:47.236Z",
               "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\Program.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\Program.cs",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\Program.cs",
-              "RelativeToolTip": "RamoUtils\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T21:37:01.862Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "README.md",
-              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\README.md",
-              "RelativeDocumentMoniker": "RamoUtils\\README.md",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\README.md",
-              "RelativeToolTip": "RamoUtils\\README.md",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAAEMAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-11-27T20:52:52.811Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "FrmPrincipal.cs",
-              "DocumentMoniker": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.cs",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
-              "RelativeToolTip": "RamoUtils\\FrmPrincipal.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T19:24:48.173Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserControlTestContainer.cs",
-              "DocumentMoniker": "C:\\Users\\joseph.tito\\AppData\\Local\\Temp\\26\\.vsdbgsrc\\3933a443edc8c13a8ec14a7f4d2196cd79c1d2d9f93cdf495e65585c71e37122\\UserControlTestContainer.cs",
-              "ToolTip": "C:\\Users\\joseph.tito\\AppData\\Local\\Temp\\26\\.vsdbgsrc\\3933a443edc8c13a8ec14a7f4d2196cd79c1d2d9f93cdf495e65585c71e37122\\UserControlTestContainer.cs [Read Only]",
-              "ViewState": "AgIAAAMBAAAAAAAAAADwvxQBAAADAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T19:21:52.516Z",
-              "EditorCaption": " [Read Only]"
             }
           ]
         },
         {
-          "DockedWidth": 1883,
+          "DockedHeight": 233,
           "SelectedChildIndex": -1,
           "Children": [
             {
