@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|c:\\program files\\feplus prod\\app wform\\ramoutils\\ramoutils\\stockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\stockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
@@ -51,14 +59,6 @@
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\frmloginsap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\ramoutils\\cambios_realizados.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
       "RelativeMoniker": "D:0:0:{2EFC9325-A962-4FBD-A84B-432A72BEEF97}|RamoUtils\\RamoUtils.csproj|solutionrelative:ramoutils\\cambios_realizados.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
     },
@@ -94,8 +94,109 @@
       "DocumentGroups": [
         {
           "DockedHeight": 528,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StockService.cs",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\StockService.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
+              "RelativeToolTip": "RamoUtils\\StockService.cs",
+              "ViewState": "AgIAALkAAAAAAAAAAAAYwMYAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T19:56:24.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FrmConsultaStock.cs",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaStock.cs",
+              "ViewState": "AgIAABEBAAAAAAAAAAAlwCUBAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T19:53:49.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FrmPrincipal.cs",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
+              "RelativeToolTip": "RamoUtils\\FrmPrincipal.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAjwCgAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:51:09.906Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\App.config",
+              "RelativeDocumentMoniker": "RamoUtils\\App.config",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\App.config",
+              "RelativeToolTip": "RamoUtils\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-02-02T19:59:01.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\Program.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\Program.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\Program.cs",
+              "RelativeToolTip": "RamoUtils\\Program.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAYwCAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:14:18.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmLoginSAP.cs [Design]",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs [Design]",
+              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:33:25.979Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmLoginSAP.cs",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
+              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.cs",
+              "ViewState": "AgIAAKwAAAAAAAAAAIAzwLgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T20:13:24.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FrmConsultaStock.cs [Design]",
+              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
+              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.cs",
+              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs [Design]",
+              "RelativeToolTip": "RamoUtils\\FrmConsultaStock.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T19:53:47.236Z",
+              "EditorCaption": " [Design]"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 19,
@@ -110,83 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StockService.cs",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\StockService.cs",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\StockService.cs",
-              "RelativeToolTip": "RamoUtils\\StockService.cs",
-              "ViewState": "AgIAALkAAAAAAAAAAAAYwMYAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T19:56:24.744Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "FrmConsultaStock.cs [Design]",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.cs",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs [Design]",
-              "RelativeToolTip": "RamoUtils\\FrmConsultaStock.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T19:53:47.236Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FrmConsultaStock.cs",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaStock.cs",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaStock.cs",
-              "RelativeToolTip": "RamoUtils\\FrmConsultaStock.cs",
-              "ViewState": "AgIAABEBAAAAAAAAAAAlwCUBAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T19:53:49.58Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "FrmPrincipal.cs",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.cs",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
-              "RelativeToolTip": "RamoUtils\\FrmPrincipal.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAjwCgAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T20:51:09.906Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "App.config",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\App.config",
-              "RelativeDocumentMoniker": "RamoUtils\\App.config",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\App.config",
-              "RelativeToolTip": "RamoUtils\\App.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2026-02-02T19:59:01.138Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\Program.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\Program.cs",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\Program.cs",
-              "RelativeToolTip": "RamoUtils\\Program.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAYwCAAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T20:14:18.252Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "ConfigHelper.cs",
               "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\ConfigHelper.cs",
               "RelativeDocumentMoniker": "RamoUtils\\ConfigHelper.cs",
@@ -211,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "FrmConsultaIntegracion.cs [Design]",
               "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.cs",
               "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaIntegracion.cs",
@@ -221,7 +246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "FrmPrincipal.cs [Design]",
               "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmPrincipal.cs",
               "RelativeDocumentMoniker": "RamoUtils\\FrmPrincipal.cs",
@@ -243,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "FrmConsultaIntegracion.cs",
               "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmConsultaIntegracion.cs",
               "RelativeDocumentMoniker": "RamoUtils\\FrmConsultaIntegracion.cs",
@@ -255,17 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "FrmLoginSAP.cs [Design]",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.cs",
-              "ToolTip": "D:\\JTITO\\NAVARRETE\\WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T20:33:25.979Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "GUIA_DE_USO.md",
               "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\GUIA_DE_USO.md",
               "RelativeDocumentMoniker": "RamoUtils\\GUIA_DE_USO.md",
@@ -297,7 +312,8 @@
               "RelativeToolTip": "RamoUtils\\FrmLoginSAP.resx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAHoAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-02-02T20:21:07.199Z"
+              "WhenOpened": "2026-02-02T20:21:07.199Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -314,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "ConnectionManager.cs",
               "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\ConnectionManager.cs",
               "RelativeDocumentMoniker": "RamoUtils\\ConnectionManager.cs",
@@ -334,19 +350,8 @@
               "RelativeToolTip": "RamoUtils\\FrmLoginSAP.Designer.cs",
               "ViewState": "AgIAAPsAAAAAAAAAAAAvwAUBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T20:14:07.491Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "FrmLoginSAP.cs",
-              "DocumentMoniker": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
-              "RelativeDocumentMoniker": "RamoUtils\\FrmLoginSAP.cs",
-              "ToolTip": "C:\\Program Files\\FEPLUS PROD\\APP WFORM\\RamoUtils\\RamoUtils\\FrmLoginSAP.cs",
-              "RelativeToolTip": "RamoUtils\\FrmLoginSAP.cs",
-              "ViewState": "AgIAAKgAAAAAAAAAAIAwwLcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T20:13:24.466Z"
+              "WhenOpened": "2026-02-02T20:14:07.491Z",
+              "EditorCaption": ""
             }
           ]
         }
